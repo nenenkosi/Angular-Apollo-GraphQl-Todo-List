@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
 
   query:Observable<any>
   disabledExpansion:boolean = true;
-  isTodoEmpty:[];
+  isTodoEmpty:Array<any>;
   constructor(private db: ApollodbService, private apollo:Apollo,private _snackBar: MatSnackBar){
     console.log('Hello AppComponent');
   }
@@ -27,8 +27,9 @@ export class AppComponent implements OnInit {
       }).valueChanges.pipe(
         map((results:any)=>{
           console.log(results.data.getTodo);
-          console.log(`results`);
           this.isTodoEmpty = results.data.getTodo
+          console.log(this.isTodoEmpty);
+          console.log(this.query);
           return results.data.getTodo
         })
       )
@@ -41,7 +42,7 @@ if (event.checked == true) {
   this.db.openSnackBar("Todo marked as done", 'okay')
 } else {
   this.db.updateTodoService(id,title,event.checked)
-  this.db.openSnackBar("Todo marked as not done", 'okay')
+  this.db.openSnackBar("Todo marked as not done", 'Okay')
 }
 
 
@@ -51,15 +52,18 @@ if (event.checked == true) {
 
 // Creates and adds new todo item to the todo list
 // Calls the createTodoService from the ApollodbService
-createTodo(title:string){
-  console.log(title);
-  this.db.createTodoService(title)
+createTodo(title:string){  
+  if (title != "") {
+  this.db.createTodoService(title)  
+  }else{
+    this.db.openSnackBar("Please add a task on the todo you can't add empty todo", 'okay')
+  }
+
 }
 
 // Delete todo with the id storted in datebase
 // Calls the deletTodoService from the ApollodbService
   deletTodo(id:string){
-    console.log(id);
     this.db.deletTodoService(id)
    }
 
@@ -76,7 +80,6 @@ createTodo(title:string){
    // update the to do list and the complete status
    // Calls the updateTodoService from the ApollodbService
    updateTodo(id: string,title: string,completed: boolean){
-    console.log( id,title,completed);
     this.db.updateTodoService(id,title,completed)
 
    }

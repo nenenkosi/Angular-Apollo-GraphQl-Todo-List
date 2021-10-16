@@ -14,7 +14,6 @@ const todoCollection = admin.firestore().collection('todo');
 // gets all the todo's from the firebase database
 export async function getTodo() {
     return new Promise(async (resolve, reject) => {
-        console.log(`getTodo`);
         try {
             await todoCollection.get().then(snapshot => {
                 const services = snapshot.docs.map((doc) => {
@@ -37,16 +36,12 @@ export async function getTodo() {
 // create a tode item on the firebase database
 export async function createTodo(data:String) {
     return new Promise(async (resolve, reject) => {
-        console.log(`createTodo`);
-        console.log(data);
         try {
           let x = todoCollection.add({
                 title: data,
                 timestamp: Date.now(),
                 completed: false
               })
-              console.log(x);
-              
                 resolve(`todo created ${x}`);
         } catch (error) {
             console.log(error);
@@ -57,9 +52,7 @@ export async function createTodo(data:String) {
 
 // deletes firebase item with the id of the collection
 export async function deleteTodo(id:any) {
-    console.log(`id ${id}`);
     return new Promise(async (resolve, reject) => {
-        console.log(`deleteTodo`);
         try {
             todoCollection.doc(id).delete() 
                 resolve("services");
@@ -72,9 +65,7 @@ export async function deleteTodo(id:any) {
 
 // Update firebase database with id, title and completed status
 export async function updatTodo(id:any,title:string,completed:boolean) {
-    console.log(`id ${id}`);
 return new Promise(async (resolve, reject) => {
-        console.log(`updatTodo`);
         try {
             todoCollection.doc(id).update({
                 title:title,

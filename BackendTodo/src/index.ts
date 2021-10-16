@@ -35,7 +35,6 @@ const resolvers = {
   Query: {
     getTodo: () => {
       return getTodo().then((res) => {
-        console.log(res);
         return res
       })
     },
@@ -49,7 +48,6 @@ const resolvers = {
       try {
         const { title } = args;
         const res = await createTodo(title)
-        console.log(res)
         return res
       } catch (error) {
         throw new ApolloError(error);
@@ -64,7 +62,6 @@ const resolvers = {
       try {
         const { id } = args;
         const res = await deleteTodo(id)
-        console.log(res)
         return res
       } catch (error) {
         throw new ApolloError(error);
@@ -79,7 +76,6 @@ const resolvers = {
       try {
         const { id, title, completed } = args;
         const res = await updatTodo(id, title, completed)
-        console.log(res)
         return res
       } catch (error) {
         throw new ApolloError(error);

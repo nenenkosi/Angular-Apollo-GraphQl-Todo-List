@@ -21,8 +21,6 @@ export class ApollodbService {
       query: Get_Todos
     }).valueChanges.pipe(
       map((results:any)=>{
-        console.log(results.data.getTodo);
-        console.log(`results`);
         return results.data.getTodo
       })
     )
@@ -32,7 +30,6 @@ export class ApollodbService {
 // Than calls the getTodo method to update list
 // and  than displays snackBar
 createTodoService(title: string){
-  console.log( title);
   this.apollo.mutate({
     mutation:Create_Todos ,
     refetchQueries: [{query:Get_Todos}],
@@ -50,7 +47,6 @@ createTodoService(title: string){
 // Than calls the getTodo method to update list
 // and  than displays snackBar
 deletTodoService(id: string){
-  console.log( id);
   this.apollo.mutate({
     mutation:Delete_Todos ,
     refetchQueries: [{query:Get_Todos}],
@@ -70,7 +66,6 @@ deletTodoService(id: string){
 // Than calls the getTodo method to update list
 // and  than displays snackBar
  updateTodoService(id: string,title: string,completed: boolean){
-  console.log( id,title,completed);
   this.apollo.mutate({
     mutation:Update_Todos ,
     refetchQueries: [{query:Get_Todos}],
