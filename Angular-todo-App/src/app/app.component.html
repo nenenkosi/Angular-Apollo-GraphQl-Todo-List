@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+</head>
+<body class="container">
+  <div class="toolbar" role="banner">
+<h1 style="text-align: center;">Todo App</h1>
+</div>
+  <div class="body">
+<h2 style="padding: 12px;">Todo List</h2>
+<div  style="justify-content: space-evenly; display: flex; flex-direction: row;"> 
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Todo</mat-label>
+      <input matInput #todoInput placeholder="Please add your todo text here">
+    </mat-form-field>
+  </form>
+  <button  mat-button style="margin-bottom: 1.34375em; background-color: #1976d2;"  (click)="createTodo(todoInput.value)">Add</button>
+</div>
+
+
+
+<mat-accordion *ngFor="let todo of query | async;let i = index;">
+  <mat-expansion-panel disabled={{disabledExpansion}} hideToggle >
+    <mat-expansion-panel-header>
+      <mat-list style="width: 78vw !important">
+        <mat-list-item >
+          <mat-checkbox matListIcon [checked]=todo.completed #todoChecked (change)="onChange(todo.id,todo.title,$event)">
+          </mat-checkbox>
+       
+              <h3 *ngIf="!todo.completed;else del" style="width: 45vw !important; margin: 0px;" mat-line> {{todo.title}} </h3>
+              <ng-template #del>
+                <h3 style="width: 45vw !important; margin:0% !important" mat-line><del>{{todo.title}}</del></h3>
+              </ng-template>
+          <button mat-icon-button (click)="editTodo()">
+            <mat-icon class="mat-24">edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deletTodo(todo.id)">
+            <mat-icon class="mat-24">delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel-header>
+    <div  style="justify-content: space-evenly; display: flex; flex-direction: row;"> 
+      <form class="example-form" #form="ngForm">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Edit</mat-label>
+          <input matInput #todoInputEdit value="{{todo.title}}" placeholder={{todo.title}}>
+        </mat-form-field>
+      </form>
+      <button mat-button style="margin-bottom: 1.34375em; background-color: #1976d2;"  (click)="updateTodo(todo.id,todoInputEdit.value,todoChecked._checked)">Update</button>
+    </div>
+  </mat-expansion-panel>
+  <mat-divider></mat-divider>
+
+</mat-accordion>
+
+<div *ngIf="isTodoEmpty;else other_content">
+</div>
+
+
+<ng-template #other_content>
+<h1 style="font-size: 28px; text-align: center; margin: 25;">There are no todo's please add a todo</h1>
+</ng-template>
+
+  </div>
+
+</body>
+</html>
+
+<router-outlet></router-outlet>
