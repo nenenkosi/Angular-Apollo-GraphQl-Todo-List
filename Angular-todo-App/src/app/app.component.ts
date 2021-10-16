@@ -77,7 +77,7 @@ createTodo(title:string){
    // Calls the updateTodoService from the ApollodbService
    updateTodo(id: string,title: string,completed: boolean){
     console.log( id,title,completed);
-    //this.db.updateTodoService(id,title,completed)
+    this.db.updateTodoService(id,title,completed)
 
    }
 
